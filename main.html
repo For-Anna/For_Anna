@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Love Poem</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #fff0f5, #fffacd);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .poem-container {
+      position: relative;
+      max-width: 600px;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 24px;
+      box-shadow: 0 0 20px rgba(255, 182, 193, 0.5);
+      text-align: center;
+      z-index: 10;
+    }
+
+    .poem-container h1 {
+      font-size: 2rem;
+      color: #ff69b4;
+      margin-bottom: 20px;
+    }
+
+    .poem-container p {
+      font-size: 1.2rem;
+      color: #ff1493;
+      line-height: 1.8;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      transform: rotate(45deg);
+      animation: float 10s infinite ease-in-out;
+      opacity: 0.6;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translateY(-30px) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0.6;
+      }
+    }
+
+    /* Randomly placed hearts */
+    .heart:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+    .heart:nth-child(2) { top: 20%; left: 85%; animation-delay: 1s; }
+    .heart:nth-child(3) { top: 70%; left: 10%; animation-delay: 2s; }
+    .heart:nth-child(4) { top: 80%; left: 90%; animation-delay: 3s; }
+    .heart:nth-child(5) { top: 40%; left: 50%; animation-delay: 4s; }
+    .heart:nth-child(6) { top: 30%; left: 75%; animation-delay: 5s; }
+
+  </style>
+</head>
+<body>
+
+  <div class="poem-container">
+    <h1>À Anna, lumière de mes jours</h1>
+    <p>
+      Dans l’éclat brun de tes boucles légères,<br>
+      S’égare le vent comme un chant amoureux,<br>
+      Tu danses, libre, au fil des jours sincères,<br>
+      Riant du monde avec un charme heureux.<br><br>
+
+      Tes yeux, deux astres au fond d’un ciel d’ambre,<br>
+      M’enlacent, m’envoûtent, me font perdre pied,<br>
+      Et ton sourire, flamme douce en ma chambre,<br>
+      Allume un feu que nul ne peut épier.<br><br>
+
+      Tu n’as besoin de soie, ni de parure,<br>
+      Pour faire plier l’éclat des reines fières,<br>
+      Ta grâce éclôt dans la plus simple allure,<br>
+      Et ton esprit fend l’ombre des lumières.<br><br>
+
+      Mais plus que tout, c’est ton amour profond<br>
+      Qui fait de moi l’élu, le plus chanceux des dons.
+
+    </p>
+  </div>
+
+  <!-- Hearts -->
+  <div class="heart"></div>
+  <div class="heart"></div>
+  <div class="heart"></div>
+  <div class="heart"></div>
+  <div class="heart"></div>
+  <div class="heart"></div>
+
+</body>
+</html>
