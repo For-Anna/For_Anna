@@ -71,7 +71,60 @@
       left: -10px;
       top: 0;
     }
+    .player-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.5);
+      text-align: center;
+      z-index: 9999;
+      width: 300px;
+      animation: fadeIn 0.3s ease-out;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
+    .player-popup h2 {
+      margin-bottom: 15px;
+      color: #ff1493;
+    }
+
+    .player-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .progress-bar {
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    .time-display {
+      font-size: 0.9rem;
+      color: #888;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #888;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -55%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
     @keyframes float {
       0% {
         transform: translateY(0) rotate(45deg);
@@ -142,6 +195,98 @@
   <div class="heart"></div>
   <div class="heart"></div>
   <div class="heart"></div>
+  <audio id="easterEggAudio" src="easter-egg.mp3" preload="auto"></audio>
 
+  <script>
+  // The secret phrase to trigger the Easter egg
+  const secretCode = "Kalel";
+  let typedBuffer = "";
+
+  document.addEventListener("keydown", function(event) {
+    // Add the pressed key (in lowercase for easier matching)
+    typedBuffer += event.key.toLowerCase();
+
+    // Limit buffer length to avoid storing too much
+    if (typedBuffer.length > secretCode.length) {
+      typedBuffer = typedBuffer.slice(-secretCode.length);
+    }
+
+    // Check if secret code is matched
+    if (typedBuffer.includes(secretCode)) {
+      triggerEasterEgg();
+      typedBuffer = ""; // Reset after triggering
+    }
+  });
+
+  function triggerEasterEgg() {
+    if (document.querySelector(".player-popup")) return; // prevent multiple popups
+
+    const popup = document.createElement("div");
+    popup.classList.add("player-popup");
+
+    popup.innerHTML = `
+      <button class="close-btn">&times;</button>
+      <h2>💖 Secret Song 💖</h2>
+      <button id="playPauseBtn">▶ Play</button>
+      <input type="range" id="progressBar" class="progress-bar" value="0" max="100">
+      <div class="time-display">
+        <span id="currentTime">0:00</span>
+        <span id="totalTime">0:00</span>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    const audio = document.getElementById("easterEggAudio");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    const progressBar = document.getElementById("progressBar");
+    const currentTimeDisplay = document.getElementById("currentTime");
+    const totalTimeDisplay = document.getElementById("totalTime");
+
+    // Update total time when loaded
+    audio.onloadedmetadata = () => {
+      totalTimeDisplay.textContent = formatTime(audio.duration);
+    };
+
+    // Play / Pause
+    playPauseBtn.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play();
+        playPauseBtn.textContent = "⏸ Pause";
+      } else {
+        audio.pause();
+        playPauseBtn.textContent = "▶ Play";
+      }
+    });
+
+    // Update progress bar
+    audio.addEventListener("timeupdate", () => {
+      progressBar.value = (audio.currentTime / audio.duration) * 100;
+      currentTimeDisplay.textContent = formatTime(audio.currentTime);
+    });
+
+    // Seek in the song
+    progressBar.addEventListener("input", () => {
+      audio.currentTime = (progressBar.value / 100) * audio.duration;
+    });
+
+    // Close button
+    popup.querySelector(".close-btn").addEventListener("click", () => {
+      audio.pause();
+      popup.remove();
+    });
+
+    // Auto close when finished
+    audio.addEventListener("ended", () => {
+      popup.remove();
+    });
+  }
+
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+  }
+</script>
 </body>
 </html>
