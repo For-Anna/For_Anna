@@ -209,14 +209,14 @@
     // Limit buffer length to avoid storing too much
     if (typedBuffer.length > secretCode.length) {
       typedBuffer = typedBuffer.slice(-secretCode.length);
-      console.log("minions")
+      console.log("minions");
     }
 
     // Check if secret code is matched
     if (typedBuffer.includes(secretCode)) {
       triggerEasterEgg();
       typedBuffer = ""; // Reset after triggering
-      console.log("Assemble")
+      console.log("Assemble");
     }
   });
 
