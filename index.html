@@ -199,26 +199,25 @@
 
   <script>
   // The secret phrase to trigger the Easter egg
-  const secretCode = "Kalel";
-  let typedBuffer = "";
+  cconst secretCode = "kalel"; // lowercase for easier matching
+let typedBuffer = "";
 
-  document.addEventListener("keydown", function(event) {
-    // Add the pressed key (in lowercase for easier matching)
-    typedBuffer += event.key.toLowerCase();
+document.addEventListener("keydown", function(event) {
+  typedBuffer += event.key.toLowerCase();
 
-    // Limit buffer length to avoid storing too much
-    if (typedBuffer.length > secretCode.length) {
-      typedBuffer = typedBuffer.slice(-secretCode.length);
-      console.log("minions");
-    }
+  // Keep only last N characters
+  if (typedBuffer.length > secretCode.length) {
+    typedBuffer = typedBuffer.slice(-secretCode.length);
+  }
 
-    // Check if secret code is matched
-    if (typedBuffer.includes(secretCode)) {
-      triggerEasterEgg();
-      typedBuffer = ""; // Reset after triggering
-      console.log("Assemble");
-    }
-  });
+  // Check match
+  if (typedBuffer === secretCode) {
+    console.log("Assemble");
+    triggerEasterEgg();
+    typedBuffer = "";
+  }
+});
+
 
   function triggerEasterEgg() {
     if (document.querySelector(".player-popup")) return; // prevent multiple popups
