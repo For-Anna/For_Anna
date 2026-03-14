@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sorry</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 40px;
+    }
+</style>
+</head>
+<body>
+
+<div id="content"></div>
+
+<script>
+const content = document.getElementById("content");
+
+function addSorryLines(amount = 50) {
+    for (let i = 0; i < amount; i++) {
+        const line = document.createElement("div");
+        line.textContent = "sorry";
+        content.appendChild(line);
+    }
+}
+
+
+addSorryLines(100);
+
+window.addEventListener("scroll", () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+        addSorryLines(50);
+    }
+});
+</script>
+
+</body>
+</html>
